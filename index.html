@@ -462,69 +462,70 @@ An AI-powered mobile assessment application providing real-time bite wound class
       });
     }
 
-    // Contact Form Validation and State Handling
-    const contactForm = document.getElementById('portfolio-contact-form');
-    const nameInput = document.getElementById('contact-name');
-    const emailInput = document.getElementById('contact-email');
-    const messageInput = document.getElementById('contact-message');
-    const nameError = document.getElementById('name-error');
-    const emailError = document.getElementById('email-error');
-    const messageError = document.getElementById('message-error');
-    const formAlert = document.getElementById('form-alert');
-    const submitBtn = document.getElementById('submit-btn');
+    
+   
+      // 3. Contact Form Validation and Submission
+      const form = document.getElementById('portfolio-contact-form');
+      const successBanner = document.getElementById('form-success-banner');
 
-    if (contactForm) {
-      contactForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        let isValid = true;
+      if (form) {
+        form.addEventListener('submit', function (e) {
+          let isValid = true;
 
-        // Reset errors
-        nameError.classList.add('hidden');
-        emailError.classList.add('hidden');
-        messageError.classList.add('hidden');
-        formAlert.classList.add('hidden');
-        formAlert.className = 'hidden p-space-md rounded-lg font-body-sm text-body-sm';
+          const nameInput = document.getElementById('contact-name');
+          const emailInput = document.getElementById('contact-email');
+          const subjectInput = document.getElementById('contact-subject');
+          const messageInput = document.getElementById('contact-message');
 
-        // Check Name
-        if (!nameInput.value.trim()) {
-          nameError.classList.remove('hidden');
-          isValid = false;
-        }
+          const inputs = [
+            nameInput,
+            emailInput,
+            subjectInput,
+            messageInput
+          ];
 
-        // Check Email
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailInput.value.trim() || !emailPattern.test(emailInput.value.trim())) {
-          emailError.classList.remove('hidden');
-          isValid = false;
-        }
+          inputs.forEach(input => {
+            const errorMsg = input.nextElementSibling;
 
-        // Check Message
-        if (!messageInput.value.trim()) {
-          messageError.classList.remove('hidden');
-          isValid = false;
-        }
+            if (!input.value.trim() || !input.checkValidity()) {
+              isValid = false;
+              input.classList.add('ring-2', 'ring-error');
 
-        if (isValid) {
-          // Simulate sending state
-          submitBtn.disabled = true;
-          const originalBtnHtml = submitBtn.innerHTML;
-          submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-lg">sync</span><span>Sending...</span>';
+              if (errorMsg) {
+                errorMsg.classList.remove('hidden');
+              }
+            } else {
+              input.classList.remove('ring-2', 'ring-error');
 
-          setTimeout(() => {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalBtnHtml;
+              if (errorMsg) {
+                errorMsg.classList.add('hidden');
+              }
+            }
+          });
 
-            // Success alert
-            formAlert.textContent = 'Thank you for reaching out! Your message has been received. Daniela will get back to you soon.';
-            formAlert.classList.remove('hidden');
-            formAlert.classList.add('bg-primary-fixed', 'text-on-primary-fixed');
+          if (!isValid) {
+            e.preventDefault();
+            return;
+          }
 
-            // Reset inputs
-            contactForm.reset();
-          }, 800);
-        }
-      });
-    }
+          // Allow the form to submit to FormSubmit.
+          // Do not call preventDefault() when the form is valid.
+          const submitButton = form.querySelector(
+            'button[type="submit"], input[type="submit"]'
+          );
+
+          if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.value = 'Sending...';
+
+            if (submitButton.tagName === 'BUTTON') {
+              submitButton.textContent = 'Sending...';
+            }
+          }
+        });
+      }
+
+
   </script>
 </div></main><footer class="w-full bg-surface-container-low mt-space-xl shadow-[0_-1px_6px_rgba(31,26,28,0.02)]"><div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin py-space-xl"><div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-start pb-space-lg"><div class="md:col-span-6 flex flex-col gap-space-sm"><div class="flex items-center gap-space-sm"><span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Daniela Mae Limbaga</span></div><p class="font-body-md text-body-sm text-on-surface-variant max-w-md">Aspiring Information Technology professional focused on software development, responsive web design, and systems architecture. Committed to building clean, purposeful digital solutions.</p><div class="inline-flex items-center gap-space-xs text-on-surface-variant font-code-sm text-code-sm pt-space-xs"><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span><span class="">Hosted with GitHub Pages</span></div></div><div class="md:col-span-3 flex flex-col gap-space-xs"><span class="font-title-md text-title-md text-on-surface mb-space-xs">Quick Navigation</span><a class="font-body-md text-body-sm text-on-surface-variant hover:text-primary transition-colors py-0.5" href="#home">Home</a><a class="font-body-md text-body-sm text-on-surface-variant hover:text-primary transition-colors py-0.5" href="#about">About Daniela</a><a class="font-body-md text-body-sm text-on-surface-variant hover:text-primary transition-colors py-0.5" href="#skills">Technical Skills</a><a class="font-body-md text-body-sm text-on-surface-variant hover:text-primary transition-colors py-0.5" href="#projects">Academic Projects</a><a class="font-body-md text-body-sm text-on-surface-variant hover:text-primary transition-colors py-0.5" href="#contact">Contact &amp; Inquiries</a></div><div class="md:col-span-3 flex flex-col gap-space-xs"><span class="font-title-md text-title-md text-on-surface mb-space-xs">Connect</span><div class="flex items-center gap-space-sm pt-1"><a aria-label="GitHub Profile" class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container transition-all shadow-[0_1px_3px_rgba(31,26,28,0.04)]" href="https://github.com" rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined text-xl">code</span></a><a aria-label="LinkedIn Profile" class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container transition-all shadow-[0_1px_3px_rgba(31,26,28,0.04)]" href="https://linkedin.com" rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined text-xl">work</span></a><a aria-label="Send Email" class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container transition-all shadow-[0_1px_3px_rgba(31,26,28,0.04)]" href="mailto:daniela@example.com"><span class="material-symbols-outlined text-xl">mail</span></a></div><p class="font-body-sm text-body-sm text-on-surface-variant pt-space-xs">Open for internships, collaborative academic projects, and junior IT roles.</p></div></div><div class="pt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm text-center sm:text-left"><p class="font-body-sm text-body-sm text-on-surface-variant">© 2026 Daniela Mae Limbaga. All rights reserved.</p><p class="font-code-sm text-code-sm text-on-surface-variant">Bachelor of Science in Information Technology</p></div></div></footer><script>const menuBtn=document.getElementById('mobile-menu-btn');const drawer=document.getElementById('mobile-drawer');const menuIcon=document.getElementById('mobile-menu-icon');if(menuBtn&&drawer){menuBtn.addEventListener('click',()=>{const isExpanded=drawer.classList.contains('hidden');drawer.classList.toggle('hidden');menuBtn.setAttribute('aria-expanded',isExpanded?'true':'false');if(menuIcon){menuIcon.textContent=isExpanded?'close':'menu';}});drawer.querySelectorAll('a').forEach(link=>{link.addEventListener('click',()=>{drawer.classList.add('hidden');menuBtn.setAttribute('aria-expanded','false');if(menuIcon){menuIcon.textContent='menu';}});});}</script>
 
